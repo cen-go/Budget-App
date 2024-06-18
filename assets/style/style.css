@@ -1,0 +1,107 @@
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../fonts/Gilroy-Regular.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gilroy Bold';
+  src: url('../fonts/Gilroy-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+body {
+  background-color: #222;
+  font-family: "Gilroy";
+}
+
+*{
+  font-family: "Gilroy";
+  list-style: none;
+  text-decoration: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+/* REMOVE SPINNERS FROM NUMBER INPUT */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.budget-container {
+  position: absolute;
+  width: 360px;
+  height: 780px;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background-color: #34006a;
+}
+
+.budget-container .app-title {
+  margin-top: 45px;
+  margin-left: 20px;
+}
+.budget-container .app-title a {
+  color: #FFF;
+}
+.budget-container .app-title a b {
+  font-family: "Gilroy Bold";
+}
+
+.budget-header .balance {
+  margin-top: 45px;
+  margin-left: 20px;
+}
+.budget-header .balance .title {
+  color: #FFF;
+  font-size: 1rem;
+  font-family: "Gilroy Bold";
+}
+.budget-header .balance .value {
+  color: #FFF;
+  font-size: 2rem;
+  margin-top: 10px;
+  font-family: "Gilroy Bold";
+}
+
+.budget-header .account {
+  display: block;
+  width: 310px;
+  margin: 35px auto 0;
+  line-height: 1.7rem;
+  text-align: center;
+}
+.budget-header .account .income, .chart, .outcome {
+  height: 50px;
+  display: inline-block;
+  width: 100px;
+  vertical-align: middle;
+}
+.budget-header .account .income .title {
+  color: #FFF;
+  opacity: 0.5;
+}
+.budget-header .account .outcome .title {
+  color: #FFF;
+  opacity: 0.5;
+}
+.budget-header .account .income .income-total {
+  color: #FFF;
+  font-family: "Gilroy Bold";
+}
+.budget-header .account .outcome .outcome-total {
+  color: #f35d46;
+  font-family: "Gilroy Bold";
+}
+
+/*/////////////   DASHBOARD    /////////////*/
