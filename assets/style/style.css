@@ -143,9 +143,9 @@ input[type=number] {
   opacity: 1 !important;
 }
 
-/* .hide {
+.hide {
   display: none;
-} */
+}
 
 .budget-dashboard input{
   /* MAKE INPUT SELECTABLE */
@@ -200,9 +200,9 @@ input[type=number] {
   background-size: 20px 20px;
   background-repeat: no-repeat;
 }
-/* .budget-dashboard #all ul.list li.income {
+.budget-dashboard #all ul.list li.income {
 
-} */
+}
  .budget-dashboard #all ul.list li.expense {
   color: #f35d46;
  }
@@ -217,7 +217,7 @@ input[type=number] {
   position: absolute;
   display: block;
   width: 360px;
-  bottom: 0;
+  bottom: 25px;
   border-top: 1px solid #ccc;
 }
 .budget-dashboard #expense .input * {
@@ -300,3 +300,92 @@ input[type=number] {
 }
 
 /* /////// INCOME //////// */
+.budget-dashboard #income {
+  width: 360px;
+  height: 360px;
+  position: relative;
+}
+.budget-dashboard #income .input {
+  position: absolute;
+  display: block;
+  width: 360px;
+  bottom: 25px;
+  border-top: 1px solid #ccc;
+}
+.budget-dashboard #income .input * {
+  display: inline-block;
+  vertical-align: middle;
+}
+.budget-dashboard #income .input input#income-title-input {
+  height: 40px;
+  width: 150px;
+  padding-left: 10px;
+  font-size: 1.2rem;
+  font-family: "Gilroy";
+  margin: 5px;
+  margin-left: 10px;
+  border-radius: 10px 0 0 10px;
+  border: none;
+}
+.budget-dashboard #income .input input#income-amount-input {
+  height: 40px;
+  width: 110px;
+  padding-left: 10px;
+  font-size: 1.2rem;
+  font-family: "Gilroy";
+  margin: 5px;
+  margin-left: -10px;
+  border-radius: 0 10px 10px 0;
+  border: none;
+}
+.budget-dashboard #income .input .add-income img {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+.budget-dashboard #income ul {
+  width: 360px;
+  height: 285px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 20px;
+  overflow-x: auto;
+}
+.budget-dashboard #income ul.list li {
+  position: relative;
+  font-size: 1rem;
+}
+.budget-dashboard #income ul.list li * {
+  display: inline-block;
+  height: 30px;
+  vertical-align: middle;
+}
+.budget-dashboard #income ul.list li .entry {
+  width: 250px;
+  height: auto;
+  padding-left: 20px;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+  font-family: "Gilroy Bold";
+}
+.budget-dashboard #income ul.list #edit {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 50px;
+  cursor: pointer;
+  background-image: url("../images/edit.png");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+}
+.budget-dashboard #income ul.list li #delete {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 20px;
+  cursor: pointer;
+  background-image: url("../images/trash.png");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+}
