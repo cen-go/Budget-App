@@ -21,3 +21,43 @@ const expenseTitle = document.getElementById("expense-title-input");
 const expenseAmount = document.getElementById("expense-amount-input");
 const addExpenseBtn = document.querySelector(".add-expense");
 
+// FUNCTIONS FOR SWITCHING TABS
+
+const active = (element) => {
+  element.classList.add("focus");
+};
+
+const inactive = (elementsArray) => {
+  elementsArray.forEach(element => element.classList.remove("focus"));
+};
+
+const show = (element) => {
+  element.classList.remove("hide");
+};
+
+const hide = (elementsArray) => {
+  elementsArray.forEach(element => element.classList.add("hide"));
+};
+
+// EVENT LISTENERS FOR TABS
+
+expenseBtn.addEventListener("click", () => {
+  active(expenseBtn);
+  inactive([incomeBtn, allBtn]);
+  show(expenseEl);
+  hide([incomeEl, allEl]);
+});
+
+incomeBtn.addEventListener("click", () => {
+  active(incomeBtn);
+  inactive([expenseBtn, allBtn]);
+  show(incomeEl);
+  hide([expenseEl, allEl]);
+});
+
+allBtn.addEventListener("click", () => {
+  active(allBtn);
+  inactive([incomeBtn, expenseBtn]);
+  show(allEl);
+  hide([expenseEl, incomeEl]);
+});

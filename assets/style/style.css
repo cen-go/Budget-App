@@ -217,7 +217,7 @@ input[type=number] {
   position: absolute;
   display: block;
   width: 360px;
-  bottom: 25px;
+  bottom: 4px;
   border-top: 1px solid #ccc;
 }
 .budget-dashboard #expense .input * {
