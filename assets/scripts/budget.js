@@ -2,7 +2,6 @@
 const balanceEl = document.querySelector(".budget-header .balance .value");
 const incomeTotalEl = document.querySelector(".income-total");
 const outcomeTotalEl = document.querySelector(".outcome-total");
-const chartEl = document.querySelector(".chart");
 const expenseEl = document.getElementById("expense");
 const incomeEl = document.getElementById("income");
 const allEl = document.getElementById("all");
@@ -22,6 +21,9 @@ const expenseAmount = document.getElementById("expense-amount-input");
 const addExpenseBtn = document.querySelector(".add-expense");
 
 let ENTRY_LIST = [];
+let balance = 0;
+let income = 0;
+let outcome = 0;
 
 // FUNCTIONS FOR SWITCHING TABS
 
@@ -45,23 +47,41 @@ const clearFields = (inputFields) => {
   inputFields.forEach(field => field.value = "");
 };
 
-// FUNCTION UPDATING DASHBORD UI
+const calculateTotal = (type) => {
+  let sum = 0;
+  for (const entry of ENTRY_LIST) {
+    if (entry.type === type) {
+      sum += entry.amount;
+    }
+  }
+  return sum;
+};
+
+// CALCULATION FUNCTIONS
+const calculateBalance = () => balance = income - outcome;
+
+// FUNCTION UPDATING UI
 const addToUI = (type, listEntry) => {  
     const uiInput = document.createElement("li");
     uiInput.id = `${ENTRY_LIST.indexOf(listEntry)}`;
     uiInput.className = `${type}`;
     uiInput.innerHTML = `
-      <div class="entry">${listEntry.type}: \$${listEntry.amount}</div>
+      <div class="entry">${listEntry.title}: \$${listEntry.amount}</div>
       <div id="edit"></div>
       <div id="delete"></div>      
     `;
     if (type === "expense") {
-      expenseList.append(uiInput);
+      expenseList.insertAdjacentElement("afterbegin",uiInput);
     } else {
-      incomeList.append(uiInput);
+      incomeList.insertAdjacentElement("afterbegin",uiInput);
     }
-    const allUiInput = uiInput.cloneNode(true);
-    allList.append(allUiInput);
+    const allListEntry = uiInput.cloneNode(true);
+    allList.insertAdjacentElement("afterbegin", allListEntry);
+    let balanceSign = (income >= outcome) ? "$" : "-$";
+    balanceEl.innerHTML = `<small>${balanceSign}</small>${Math.abs(balance)}`;
+    incomeTotalEl.innerHTML = `<small>$</small>${income}`;
+    outcomeTotalEl.innerHTML = `<small>$</small>${outcome}`;
+    updateChart();
 };
 
 
@@ -69,14 +89,16 @@ const addExpenseHandler = () => {
   if (!expenseTitle.value || !expenseAmount.value) {
     return;
   }
-  let expense = {
+  let expenseInput = {
     type: "expense",
     title: expenseTitle.value,
     amount: parseFloat(expenseAmount.value),
   }
-  ENTRY_LIST.push(expense);
-  console.log(ENTRY_LIST);
-  addToUI(expense.type, expense);
+  ENTRY_LIST.push(expenseInput);  
+  outcome = calculateTotal("expense");
+  calculateBalance();
+  console.log(income, outcome, balance);
+  addToUI(expenseInput.type, expenseInput);
   clearFields([expenseTitle, expenseAmount]);
 };
 
@@ -84,16 +106,19 @@ const addIncomeHandler = () => {
   if (!incomeTitle.value || !incomeAmount.value) {
     return;
   }
-  let income = {
+  let incomeInput = {
     type: "income",
     title: incomeTitle.value,
     amount: parseFloat(incomeAmount.value),
   }
-  ENTRY_LIST.push(income);
-  console.log(ENTRY_LIST);
-  addToUI(income.type, income);
+  ENTRY_LIST.push(incomeInput);
+  income = calculateTotal("income");
+  calculateBalance();
+  console.log(income, outcome, balance);
+  addToUI(incomeInput.type, incomeInput);
   clearFields([incomeTitle, incomeAmount]);
 };
+
 
 // EVENT LISTENERS FOR TABS
 
@@ -123,3 +148,4 @@ allBtn.addEventListener("click", () => {
 addExpenseBtn.addEventListener("click", addExpenseHandler);
 
 addIncomeBtn.addEventListener("click", addIncomeHandler);
+
