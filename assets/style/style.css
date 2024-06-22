@@ -175,16 +175,16 @@ input[type=number] {
   margin-top: 20px;
   overflow-x: auto;
 }
-.budget-dashboard #all ul.list li {
+#all ul.list li, #expense ul.list li, #income ul.list li {
   position: relative;
   font-size: 1rem;
 }
-.budget-dashboard #all ul.list li * {
+#all ul.list li *, #expense ul.list li *, #income ul.list li * {
   display: inline-block;
   height: 30px;
   vertical-align: middle;
 }
-.budget-dashboard #all ul.list li .entry {
+.budget-dashboard #all ul.list li .entry, #expense ul.list li .entry, #income ul.list li .entry {
   width: 250px;
   height: auto;
   padding-left: 20px;
@@ -204,9 +204,6 @@ input[type=number] {
   background-image: url("../images/trash.png");
   background-size: 20px 20px;
   background-repeat: no-repeat;
-}
-.budget-dashboard #all ul.list li.income {
-
 }
  .budget-dashboard #all ul.list li.expense {
   color: #f35d46;
@@ -265,22 +262,7 @@ input[type=number] {
   margin-top: 20px;
   overflow-x: auto;
 }
-#expense ul.list li, #income ul.list li {
-  position: relative;
-  font-size: 1rem;
-}
-#expense ul.list li *, #income ul.list li * {
-  display: inline-block;
-  height: 30px;
-  vertical-align: middle;
-}
-#expense ul.list li .entry, #income ul.list li .entry {
-  width: 250px;
-  height: auto;
-  padding-left: 20px;
-  margin-bottom: 10px;
-  word-wrap: break-word;
-  font-family: "Gilroy Bold";
+#expense ul.list li .entry {  
   color: #f35d46;
 }
 #expense #edit, #income #edit {
@@ -306,7 +288,4 @@ input[type=number] {
   width: 360px;
   bottom: 25px;
   border-top: 1px solid #ccc;
-}
-.budget-dashboard #income ul.list li .entry {  
-  color: #000;
 }
