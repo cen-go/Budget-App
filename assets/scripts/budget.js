@@ -20,7 +20,7 @@ const expenseTitle = document.getElementById("expense-title-input");
 const expenseAmount = document.getElementById("expense-amount-input");
 const addExpenseBtn = document.querySelector(".add-expense");
 
-let ENTRY_LIST = [];
+let ENTRY_LIST = JSON.parse(localStorage.getItem("entry_list")) || [];
 let balance = 0;
 let income = 0;
 let outcome = 0;
@@ -47,6 +47,7 @@ const clearFields = (inputFields) => {
   inputFields.forEach(field => field.value = "");
 };
 
+// CALCULATION FUNCTIONS
 const calculateTotal = (type) => {
   let sum = 0;
   for (const entry of ENTRY_LIST) {
@@ -57,34 +58,49 @@ const calculateTotal = (type) => {
   return sum;
 };
 
-// CALCULATION FUNCTIONS
 const calculateBalance = () => balance = income - outcome;
 
 // FUNCTION UPDATING UI
-const addToUI = (type, listEntry) => {  
-    const uiInput = document.createElement("li");
-    uiInput.id = `${ENTRY_LIST.indexOf(listEntry)}`;
-    uiInput.className = `${type}`;
-    uiInput.innerHTML = `
-      <div class="entry">${listEntry.title}: \$${listEntry.amount}</div>
-      <div id="edit"></div>
-      <div id="delete"></div>      
-    `;
-    if (type === "expense") {
-      expenseList.insertAdjacentElement("afterbegin",uiInput);
-    } else {
-      incomeList.insertAdjacentElement("afterbegin",uiInput);
+
+const clearLists = (lists) => {
+  lists.forEach(list => list.innerHTML = "");
+}
+
+const updateUI = () => {  
+    clearLists([expenseList, incomeList, allList]);
+    for (const entry of ENTRY_LIST) {
+      const uiInput = document.createElement("li");
+      uiInput.id = `${ENTRY_LIST.indexOf(entry)}`;
+      uiInput.className = `${entry.type}`;
+      uiInput.innerHTML = `
+        <div class="entry">${entry.title}: \$${entry.amount}</div>
+        <div id="edit"></div>
+        <div id="delete"></div>      
+      `;
+      if (entry.type === "expense") {
+        expenseList.insertAdjacentElement("afterbegin",uiInput);
+      } else {
+        incomeList.insertAdjacentElement("afterbegin",uiInput);
+      }   
+      const allListEntry = uiInput.cloneNode(true);
+      allList.insertAdjacentElement("afterbegin", allListEntry);       
     }
-    const allListEntry = uiInput.cloneNode(true);
-    allList.insertAdjacentElement("afterbegin", allListEntry);
-    let balanceSign = (income >= outcome) ? "$" : "-$";
+    //CALCULATIONS AND UPDATE OF UI HEADER
+    outcome = calculateTotal("expense");
+    income = calculateTotal("income");
+    calculateBalance();  
+    let balanceSign = income >= outcome ? "$" : "-$";
     balanceEl.innerHTML = `<small>${balanceSign}</small>${Math.abs(balance)}`;
     incomeTotalEl.innerHTML = `<small>$</small>${income}`;
     outcomeTotalEl.innerHTML = `<small>$</small>${outcome}`;
     updateChart();
+    localStorage.setItem("entry_list", JSON.stringify(ENTRY_LIST));    
 };
 
+updateUI();  // To read data from local storage at first launch of the app
 
+
+// EVENT HANDLER FUNCTIONS FOR ADDING INCOME AND EXPENSE
 const addExpenseHandler = () => {
   if (!expenseTitle.value || !expenseAmount.value) {
     return;
@@ -94,11 +110,8 @@ const addExpenseHandler = () => {
     title: expenseTitle.value,
     amount: parseFloat(expenseAmount.value),
   }
-  ENTRY_LIST.push(expenseInput);  
-  outcome = calculateTotal("expense");
-  calculateBalance();
-  console.log(income, outcome, balance);
-  addToUI(expenseInput.type, expenseInput);
+  ENTRY_LIST.push(expenseInput);     
+  updateUI();
   clearFields([expenseTitle, expenseAmount]);
 };
 
@@ -111,12 +124,29 @@ const addIncomeHandler = () => {
     title: incomeTitle.value,
     amount: parseFloat(incomeAmount.value),
   }
-  ENTRY_LIST.push(incomeInput);
-  income = calculateTotal("income");
-  calculateBalance();
-  console.log(income, outcome, balance);
-  addToUI(incomeInput.type, incomeInput);
+  ENTRY_LIST.push(incomeInput);   
+  updateUI();
   clearFields([incomeTitle, incomeAmount]);
+};
+
+const deleteEditHandler = (event) => { 
+  const targetBtn = event.target;
+  const targetListItem = event.target.closest("li");
+  if (targetBtn.id === "delete") {    
+    ENTRY_LIST.splice(targetListItem.id, 1);    
+    updateUI();
+  } else if (targetBtn.id === "edit") {
+    const targetEntry = ENTRY_LIST[targetListItem.id];
+    console.log(targetEntry);
+    if (targetEntry.type === "income") {
+      incomeTitle.value = targetEntry.title;
+      incomeAmount.value = targetEntry.amount;
+    } else {
+      expenseTitle.value = targetEntry.title;
+      expenseAmount.value = targetEntry.amount;
+    }
+    ENTRY_LIST.splice(targetListItem.id, 1);  
+  }
 };
 
 
@@ -149,3 +179,10 @@ addExpenseBtn.addEventListener("click", addExpenseHandler);
 
 addIncomeBtn.addEventListener("click", addIncomeHandler);
 
+// EVENT LISTENERS FOR DELETING AND EDITING
+
+expenseList.addEventListener("click", deleteEditHandler);
+
+incomeList.addEventListener("click", deleteEditHandler);
+
+allList.addEventListener("click", deleteEditHandler);

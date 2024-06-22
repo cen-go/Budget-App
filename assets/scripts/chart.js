@@ -6,7 +6,6 @@ canvas.height = 50;
 chartEl.append(canvas);
 
 const canvasContext = canvas.getContext("2d");
-console.log(canvasContext);
 
 const drawCircle = (color, ratio, anticlockwise) => {
   canvasContext.strokeStyle = color;
