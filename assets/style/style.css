@@ -195,7 +195,7 @@ input[type=number] {
 .budget-dashboard #all ul.list li #edit {
   visibility: hidden;
 }
-.budget-dashboard #all ul.list li #delete {
+#all #delete,#expense #delete , #income #delete {
   position: absolute;
   width: 20px;
   height: 20px;
@@ -283,23 +283,13 @@ input[type=number] {
   font-family: "Gilroy Bold";
   color: #f35d46;
 }
-.budget-dashboard #expense ul.list li #edit {
+#expense #edit, #income #edit {
   position: absolute;
   width: 20px;
   height: 20px;
   right: 50px;
   cursor: pointer;
   background-image: url("../images/edit.png");
-  background-size: 20px 20px;
-  background-repeat: no-repeat;
-}
-.budget-dashboard #expense ul.list li #delete {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  right: 20px;
-  cursor: pointer;
-  background-image: url("../images/trash.png");
   background-size: 20px 20px;
   background-repeat: no-repeat;
 }
@@ -373,24 +363,4 @@ input[type=number] {
   margin-bottom: 10px;
   word-wrap: break-word;
   font-family: "Gilroy Bold";
-}
-.budget-dashboard #income ul.list #edit {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  right: 50px;
-  cursor: pointer;
-  background-image: url("../images/edit.png");
-  background-size: 20px 20px;
-  background-repeat: no-repeat;
-}
-.budget-dashboard #income ul.list li #delete {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  right: 20px;
-  cursor: pointer;
-  background-image: url("../images/trash.png");
-  background-size: 20px 20px;
-  background-repeat: no-repeat;
 }
